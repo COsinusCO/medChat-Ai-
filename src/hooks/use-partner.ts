@@ -1,5 +1,5 @@
 /**
- * Everything that makes this app "the Shifo24 assistant": the partner card (name + prompt) and
+ * Everything that makes this app "the MedChat assistant": the partner card (prompt) and
  * its medical specialties. Both are derived from `PARTNER_ID`, exactly like `usePartnerContext`
  * derives them from the `partner` URL param in the Mini App.
  */
@@ -39,7 +39,7 @@ export function usePartner() {
 
   return {
     card,
-    name: card?.name || PARTNER_FALLBACK_NAME,
+    name: PARTNER_FALLBACK_NAME,
     prompt: card?.prompt ?? null,
     industryTypes,
   };

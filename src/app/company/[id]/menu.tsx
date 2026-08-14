@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
   catTitle: { marginTop: Spacing.three, marginBottom: Spacing.two },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
   confirmWrap: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: 'rgba(0,0,0,0.4)',
     justifyContent: 'center',
     padding: Spacing.four,

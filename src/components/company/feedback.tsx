@@ -11,6 +11,7 @@ import { useI18n } from '@/i18n';
 import { useTheme } from '@/hooks/use-theme';
 import { fetchCompanyComments } from '@/services/company-service';
 import type { CompanyComment } from '@/types/chat';
+import { mediaUrl } from '@/utils/media-url';
 import { timeAgo } from '@/utils/photos';
 
 /** `useState(3)` in the web — three comments per page. */
@@ -90,7 +91,7 @@ function Comment({ comment, last }: { comment: CompanyComment; last: boolean }) 
   const theme = useTheme();
   const { t } = useI18n();
 
-  const avatar = comment.user?.telegram_profile_photo?.image || DEFAULT_AVATAR;
+  const avatar = mediaUrl(comment.user?.telegram_profile_photo?.image) || DEFAULT_AVATAR;
 
   return (
     <View style={[styles.comment, !last && { borderBottomColor: theme.separatorStrong, borderBottomWidth: StyleSheet.hairlineWidth }]}>

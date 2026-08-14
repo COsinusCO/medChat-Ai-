@@ -1,7 +1,7 @@
 import { memo } from 'react';
-import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
-import { MapResults } from '@/components/chat/map-results';
+import { MapResults, MapResultsSkeleton } from '@/components/chat/map-results';
 import { Markdown } from '@/components/chat/markdown';
 import { ThemedText } from '@/components/themed-text';
 import { Radius, Spacing } from '@/constants/theme';
@@ -90,14 +90,7 @@ export const Message = memo(function Message({
         hasBody && <Markdown text={message.text} />
       )}
 
-      {message.isSearching && (
-        <View style={styles.searching}>
-          <ActivityIndicator size="small" color={theme.primary} />
-          <ThemedText type="caption" themeColor="textSecondary">
-            {t('searching')}
-          </ThemedText>
-        </View>
-      )}
+      {message.isSearching && !message.searchResults?.length && <MapResultsSkeleton />}
 
       {message.needsLocation && (
         <View style={[styles.locationCard, { backgroundColor: theme.primaryMuted }]}>
@@ -206,11 +199,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.two,
     borderRadius: Radius.medium,
-  },
-  searching: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.two,
   },
   locationCard: {
     gap: Spacing.two,

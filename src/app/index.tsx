@@ -25,6 +25,7 @@ import { useTheme } from '@/hooks/use-theme';
 import { useTranslate } from '@/i18n';
 import { setChatFavorite } from '@/services/chat-service';
 import type { CatalogCompany, ChatMessage } from '@/types/chat';
+import { mediaUrl } from '@/utils/media-url';
 import { openCompanyAction } from '@/utils/open-company-action';
 
 export default function ChatScreen() {
@@ -120,7 +121,7 @@ export default function ChatScreen() {
   return (
     <View style={[styles.screen, { backgroundColor: theme.background }]}>
       <ChatHeader
-        photoUrl={user?.telegram_profile_photo}
+        photoUrl={mediaUrl(user?.telegram_profile_photo)}
         isFavorite={isFavorite}
         onOpenProfile={() => router.push('/profile')}
         onOpenHistory={() => setHistoryOpen(true)}
@@ -163,7 +164,7 @@ export default function ChatScreen() {
           onSend={send}
           onStop={abort}
           isStreaming={isStreaming}
-          placeholder={t('inputPlaceholder', { partner: partner.name })}
+          placeholder={t('inputPlaceholder')}
         />
       </KeyboardAvoidingView>
 

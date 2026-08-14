@@ -1,4 +1,3 @@
-import { Image } from 'expo-image';
 import { SymbolView } from 'expo-symbols';
 import { memo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -38,7 +37,6 @@ export const CompanyCard = memo(function CompanyCard({
     meters: t('meters'),
     kilometers: t('kilometers'),
   });
-  const logo = company.logoThumbnail || company.logo || company.imageThumbnail || company.image;
   const action = resolveCompanyAction(company);
   const showAction = company.is_partner && !!action;
 
@@ -51,70 +49,52 @@ export const CompanyCard = memo(function CompanyCard({
         { backgroundColor: theme.bubbleIn, borderColor: theme.border },
         pressed && styles.pressed,
       ]}>
-      <View style={styles.row}>
-        {logo ? (
-          <Image source={{ uri: logo }} style={styles.logo} contentFit="cover" />
-        ) : (
-          <View style={[styles.logo, styles.logoFallback, { backgroundColor: theme.primaryMuted }]}>
+      <View style={styles.body}>
+        <View style={styles.nameRow}>
+          <ThemedText type="smallBold" numberOfLines={2} style={styles.name}>
+            {company.name}
+          </ThemedText>
+          {company.is_partner && (
             <SymbolView
-              name={{
-                ios: 'cross.case.fill',
-                android: 'health_and_safety',
-                web: 'health_and_safety',
-              }}
-              size={20}
+              name={{ ios: 'checkmark.seal.fill', android: 'verified', web: 'verified' }}
+              size={14}
               tintColor={theme.primary}
             />
-          </View>
+          )}
+        </View>
+
+        {(!!company.type || !!address) && (
+          <ThemedText type="caption" themeColor="textSecondary" numberOfLines={1}>
+            {[company.type, address].filter(Boolean).join(' · ')}
+          </ThemedText>
         )}
 
-        <View style={styles.body}>
-          <View style={styles.nameRow}>
-            <ThemedText type="smallBold" numberOfLines={2} style={styles.name}>
-              {company.name}
-            </ThemedText>
-            {company.is_partner && (
+        <View style={styles.metaRow}>
+          {typeof company.rating === 'number' && company.rating > 0 && (
+            <View style={styles.meta}>
               <SymbolView
-                name={{ ios: 'checkmark.seal.fill', android: 'verified', web: 'verified' }}
-                size={14}
-                tintColor={theme.primary}
+                name={{ ios: 'star.fill', android: 'star', web: 'star' }}
+                size={11}
+                tintColor={theme.warning}
               />
-            )}
-          </View>
+              <ThemedText type="caption" themeColor="textSecondary">
+                {company.rating.toFixed(1)}
+                {!!reviews && ` ${reviews}`}
+              </ThemedText>
+            </View>
+          )}
 
-          {(!!company.type || !!address) && (
-            <ThemedText type="caption" themeColor="textSecondary" numberOfLines={1}>
-              {[company.type, address].filter(Boolean).join(' · ')}
+          {!!distance && (
+            <ThemedText type="caption" themeColor="textMuted">
+              {distance}
             </ThemedText>
           )}
 
-          <View style={styles.metaRow}>
-            {typeof company.rating === 'number' && company.rating > 0 && (
-              <View style={styles.meta}>
-                <SymbolView
-                  name={{ ios: 'star.fill', android: 'star', web: 'star' }}
-                  size={11}
-                  tintColor={theme.warning}
-                />
-                <ThemedText type="caption" themeColor="textSecondary">
-                  {company.rating.toFixed(1)}
-                  {!!reviews && ` ${reviews}`}
-                </ThemedText>
-              </View>
-            )}
-
-            {!!distance && (
-              <ThemedText type="caption" themeColor="textMuted">
-                {distance}
-              </ThemedText>
-            )}
-
-            {company.is_open !== undefined && (
-              <ThemedText type="caption" themeColor={company.is_open ? 'success' : 'textMuted'}>
-                {company.is_open ? t('open') : t('closed')}
-              </ThemedText>
-            )}
-          </View>
+          {company.is_open !== undefined && (
+            <ThemedText type="caption" themeColor={company.is_open ? 'success' : 'textMuted'}>
+              {company.is_open ? t('open') : t('closed')}
+            </ThemedText>
+          )}
         </View>
       </View>
 
@@ -150,22 +130,7 @@ const styles = StyleSheet.create({
     borderRadius: Radius.large,
     borderWidth: StyleSheet.hairlineWidth,
   },
-  row: {
-    flexDirection: 'row',
-    gap: Spacing.three,
-    alignItems: 'center',
-  },
-  logo: {
-    width: 48,
-    height: 48,
-    borderRadius: Radius.medium,
-  },
-  logoFallback: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   body: {
-    flex: 1,
     gap: 2,
   },
   nameRow: {

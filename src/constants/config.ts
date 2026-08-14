@@ -7,19 +7,22 @@ const DEFAULT_API_BASE = 'https://dev.admin13.uz';
 
 const host = (process.env.EXPO_PUBLIC_API_HOST ?? DEFAULT_API_BASE).replace(/\/$/, '');
 
+/** Origin for media that the gateway stores as a relative path (`/uploads/…`). */
+export const API_HOST = host;
+
 /** Catalog / chat / auth gateway. */
 export const API_URL = `${host}/v1`;
 /** Home cards live on a separate service, same host. */
 export const HOME_API_URL = `${host}/homepage/v1`;
 
 /**
- * The single partner this app is scoped to: Shifo24 (`card.link` = `company_type`).
+ * The single partner this app is scoped to (`card.link` = `company_type`).
  * In the web client the user picks it from the partner grid; here it is the whole app.
  */
 export const PARTNER_ID = '6932ea73d763c1eb641fe46f';
 
-/** Shown until the partner card loads — its title in every language is the same. */
-export const PARTNER_FALLBACK_NAME = 'Shifo24';
+/** Brand name shown in the UI (login pill, input placeholder, chat context). */
+export const PARTNER_FALLBACK_NAME = 'MedChat';
 
 /** Identifies this client to `/auth/mobile/start`. */
 export const APP_ID = 'medchat';
@@ -31,7 +34,7 @@ export const APP_ID = 'medchat';
  */
 export const DEFAULT_SEARCH_COORDS = { lat: 41.310038, lon: 69.240071 };
 
-/** Rough Uzbekistan bounding box — Shifo24's catalog is not useful outside it. */
+/** Rough Uzbekistan bounding box — this catalog is not useful outside it. */
 export function isInServiceArea(lat: number, lon: number): boolean {
   return lat >= 37 && lat <= 46 && lon >= 55 && lon <= 74;
 }

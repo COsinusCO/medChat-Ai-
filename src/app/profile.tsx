@@ -16,6 +16,7 @@ import { useI18n, useTranslate } from '@/i18n';
 import { LANGUAGES, LANGUAGE_NAMES, type Language } from '@/i18n/translations';
 import { useTheme } from '@/hooks/use-theme';
 import { getInitials } from '@/utils/format';
+import { mediaUrl } from '@/utils/media-url';
 
 export default function ProfileScreen() {
   const theme = useTheme();
@@ -28,6 +29,7 @@ export default function ProfileScreen() {
 
   const name = user?.telegram_name || user?.full_name || 'TrueGis';
   const username = user?.telegram_username;
+  const photo = mediaUrl(user?.telegram_profile_photo);
 
   const confirmLogout = () => {
     Alert.alert(t('logoutConfirmTitle'), t('logoutConfirmText'), [
@@ -53,12 +55,8 @@ export default function ProfileScreen() {
       <ScrollView
         contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + Spacing.five }]}>
         <View style={styles.identity}>
-          {user?.telegram_profile_photo ? (
-            <Image
-              source={{ uri: user.telegram_profile_photo }}
-              style={styles.photo}
-              contentFit="cover"
-            />
+          {photo ? (
+            <Image source={{ uri: photo }} style={styles.photo} contentFit="cover" />
           ) : (
             <Avatar initials={getInitials(name, '')} size={88} />
           )}
@@ -179,7 +177,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   backdrop: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: 'rgba(0,0,0,0.35)',
   },
   modalWrapper: {

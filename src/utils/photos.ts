@@ -4,6 +4,7 @@
  * the logo only if the venue has almost nothing.
  */
 import type { CompanyPhoto } from '@/types/chat';
+import { mediaUrl } from '@/utils/media-url';
 
 const MIN_PHOTOS = 4;
 
@@ -54,9 +55,9 @@ export function mergeCompanyPhotos(
   return merged;
 }
 
-/** The largest URL a photo entry offers. */
+/** The largest URL a photo entry offers, made loadable on device. */
 export function photoUrl(photo: CompanyPhoto): string | undefined {
-  return photo.photo_url_large || photo.photo_url;
+  return mediaUrl(photo.photo_url_large || photo.photo_url, 'w1080') || undefined;
 }
 
 /** Relative time in the Mini App's wording (`useTimeAgo`). */

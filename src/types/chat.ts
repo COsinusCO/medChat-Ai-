@@ -38,6 +38,8 @@ export type CatalogCompany = {
   is_partner?: boolean;
   logo?: string;
   logoThumbnail?: string;
+  logo_icon_light?: string;
+  logo_icon_dark?: string;
   image?: string;
   imageThumbnail?: string;
   discount_percent?: number;
@@ -48,6 +50,15 @@ export type CatalogCompany = {
   working_hours?: WorkingHours;
   photos_sample?: CompanyPhoto[];
   button?: { name?: LocalizedText; type?: string; value?: string };
+  /** Set when the catalog returns a specialist instead of a clinic. */
+  result_type?: string;
+  /** Linked clinic on `result_type: "info_person"` rows. */
+  company?: {
+    _id?: string;
+    name?: string;
+    logo?: string | null;
+    logoThumbnail?: string | null;
+  };
 };
 
 export type CompanyMetro = { name?: string; distance?: CompanyDistance };
@@ -80,8 +91,6 @@ export type CompanyDetail = CatalogCompany & {
   email?: string | null;
   /** Google Maps reviews page — the "Google" link under the rating. */
   reviews_link?: string;
-  logo_icon_light?: string;
-  logo_icon_dark?: string;
   street_address?: string;
   banners?: CompanyBanner[];
   has_menu?: boolean;

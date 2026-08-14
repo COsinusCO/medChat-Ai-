@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   hit: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     flexDirection: 'row',
     top: 80,
   },

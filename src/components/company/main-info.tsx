@@ -17,6 +17,7 @@ import { useTheme } from '@/hooks/use-theme';
 import { toggleFavorite } from '@/services/company-service';
 import type { CompanyDetail } from '@/types/chat';
 import { localizedText } from '@/utils/company';
+import { mediaUrl } from '@/utils/media-url';
 import { companyShareLink } from '@/utils/share-company';
 import { convertTo24HourFormat, translateWeekday, WEEKDAYS } from '@/utils/working-hours';
 
@@ -50,7 +51,9 @@ export function MainInfo({
   const details = useMemo(() => collectDetails(company), [company]);
   const shownDetails = showAllDetails ? details : details.slice(0, VISIBLE_DETAILS);
 
-  const logo = company.logo || company.logoThumbnail || company.image;
+  const logo = mediaUrl(
+    company.logo || company.logoThumbnail || company.image || company.logo_icon_light
+  );
   const phone = company.phone_number?.replace(/[^\d+]/g, '');
   // The catalog types `description` as `any`; only a real string is renderable.
   const description = typeof company.description === 'string' ? company.description : '';
@@ -297,7 +300,13 @@ function ActionTile({
         pressed && styles.pressed,
       ]}>
       <SymbolView name={icon} size={24} tintColor={theme.text} />
-      <ThemedText style={styles.tileLabel}>{label}</ThemedText>
+      <ThemedText
+        numberOfLines={1}
+        adjustsFontSizeToFit
+        minimumFontScale={0.65}
+        style={styles.tileLabel}>
+        {label}
+      </ThemedText>
     </Pressable>
   );
 }
@@ -501,6 +510,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 16,
     fontWeight: '500',
+    textAlign: 'center',
+    alignSelf: 'stretch',
+    paddingHorizontal: 2,
   },
   details: {
     flexDirection: 'row',

@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   history: { paddingVertical: Spacing.two, gap: 2 },
-  sheet: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.35)', justifyContent: 'flex-end' },
+  sheet: { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(0,0,0,0.35)', justifyContent: 'flex-end' },
   sheetCard: {
     flex: 1,
     marginTop: 56,

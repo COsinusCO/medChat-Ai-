@@ -392,7 +392,7 @@ const styles = StyleSheet.create({
   payRow: { padding: Spacing.three, borderRadius: CompanyRadius.inner, marginBottom: Spacing.two },
   line: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', gap: Spacing.two },
   overlay: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'rgba(0,0,0,0.25)',
